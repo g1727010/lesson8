@@ -30,7 +30,7 @@
 	uniform fixed _OutlineSize;
 	uniform fixed _Cutoff;
 
-	v2f vert(appdata v)
+	v2f vert_sub(appdata v, float2 offset)
 	{
 		v2f o;
 		float depth = UnityObjectToViewPos(v.vertex).z;
@@ -41,7 +41,7 @@
 
 	fixed4 frag(v2f i) : SV_Target
 	{
-		return fixed4(_OutlineColor.xyz, tex2D(_MianTex, i.uv).a * _OutlineColor.a);
+		return fixed4(_OutlineColor.xyz, tex2D(_MainTex, i.uv).a * _OutlineColor.a);
 	}
 	ENDCG
 
@@ -63,7 +63,7 @@
 
 			v2f vert(appdata v)
 			{
-				return vert_sub(v, float2(-OutlineSize, 0));
+				return vert_sub(v, float2(-_OutlineSize, 0));
 			}
 			ENDCG
 		}
@@ -77,7 +77,7 @@
 
 			v2f vert(appdata v)
 			{
-				return vert_sub(v, float2(+OutlineSize, 0));
+				return vert_sub(v, float2(+_OutlineSize, 0));
 			}
 			ENDCG
 		}
@@ -91,7 +91,7 @@
 
 				v2f vert(appdata v)
 				{
-					return vert_sub(v, float2(0, -OutlineSize));
+					return vert_sub(v, float2(0, -_OutlineSize));
 				}
 				ENDCG
 			}
@@ -105,7 +105,7 @@
 
 				v2f vert(appdata v)
 				{
-					return vert_sub(v, float2(0, +OutlineSize));
+					return vert_sub(v, float2(0, +_OutlineSize));
 				}
 				ENDCG
 			}
